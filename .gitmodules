@@ -1,0 +1,6 @@
+[submodule "firmware/lib/ArduinoCore-avr"]
+	path = firmware/lib/ArduinoCore-avr
+	url = https://github.com/arduino/ArduinoCore-avr.git
+[submodule "tools/pyserial"]
+	path = tools/pyserial
+	url = https://github.com/pyserial/pyserial.git

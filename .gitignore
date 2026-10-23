@@ -1,0 +1,9 @@
+.xmake/
+build/
+.vscode/
+.idea/
+*.swp
+*~
+__pycache__/
+*.pyc
+.mypy_cache/
