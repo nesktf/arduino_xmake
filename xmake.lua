@@ -381,9 +381,18 @@ task("flash")
 
     os.exec("xmake build firmware")
 
+    config.load()
     local board_arg = option.get("target") or config.get("board") or default_board
+    local board_info = boards[board_arg] or boards["nano"]
+
     local port_arg = option.get("port") or config.get("port")
     local baud_arg = option.get("baud") or config.get("baud")
+    if (not baud_arg or #tostring(baud_arg) == 0) and board_info.upload_baud then
+      local boot_opt = option.get("bootloader") or config.get("bootloader")
+      if board_arg ~= "nano" or (boot_opt and boot_opt ~= "auto") then
+        baud_arg = board_info.upload_baud
+      end
+    end
     local boot_arg = option.get("bootloader") or config.get("bootloader")
     local mcu_arg = option.get("mcu") or config.get("mcu")
 
@@ -425,6 +434,7 @@ task("monitor")
     import("core.base.option")
     import("core.project.config")
 
+    config.load()
     local port = option.get("port") or config.get("port")
     local baud = tostring(option.get("baud") or config.get("baud") or 9600)
     local miniterm = path.join(pdir, "tools/miniterm.py")
@@ -433,7 +443,7 @@ task("monitor")
     if port and #port > 0 then
       table.insert(args, port)
     else
-      table.insert(args, "-") -- miniterm prompts or lists ports when "-"
+      table.insert(args, "-")
     end
     table.insert(args, baud)
 

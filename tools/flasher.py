@@ -213,7 +213,7 @@ def flash(board_key, port, baud, hex_file, mcu=None, programmer=None, bootloader
         if i > 0:
             print(f"\nAttempt at {baud_candidates[i-1]} baud failed. Retrying at {try_baud} baud...")
             if board_config.get("reset") == "dtr":
-                reset_avr_via_dtr()
+                reset_avr_via_dtr(target_port)
             time.sleep(0.2)
 
         args = [
